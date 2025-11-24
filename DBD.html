@@ -2,27 +2,35 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>三才殺機挑戰</title>
+<title>三才組合顯示</title>
 
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: #f5f5f5;
         margin: 0;
         height: 100vh;
 
+        /* ⭐ 加入背景圖片 */
+        background-image: url('https://assets.deadbydaylight.com/dbd_animated_keyart_poster_b318564e39.jpg');
+        background-size: cover;       /* 充滿整個畫面 */
+        background-position: center;  /* 置中 */
+        background-repeat: no-repeat; /* 不重複 */
+        background-attachment: fixed; /* 滾動時固定 */
+
+        /* ⭐ 保留原本置中排版 */
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .container {
-        background: white;
+        background: rgba(255,255,255,0.85); /* ⭐ 微透明白背景讓字更清楚 */
         padding: 30px 40px;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.35);
         text-align: center;
         width: 360px;
+        backdrop-filter: blur(5px); /* ⭐ 讓背景更有霧化效果 */
     }
 
     input, select {
@@ -35,10 +43,11 @@
         font-weight: bold;
         margin-top: 20px;
         display: block;
+        color: #222;
     }
 
     .list-box {
-        background: #fafafa;
+        background: rgba(255,255,255,0.7);
         margin-top: 10px;
         padding: 10px;
         border-radius: 8px;
@@ -59,7 +68,7 @@
     <h2>三才殺機</h2>
 
     <!-- 🟡 三個字輸入 -->
-    <label>輸入你的五行三才（例如：金火水）：</label>
+    <label>輸入三才（例如：金火水）：</label>
     <input type="text" id="sancaiInput" maxlength="3" placeholder="例如：金火木">
     <button onclick="updateOptions()">更新</button>
 
@@ -200,5 +209,3 @@ function fillList(id, items) {
 
 </body>
 </html>
-
-
