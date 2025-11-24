@@ -2,62 +2,115 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>三才組合顯示</title>
+<title>三才殺機挑戰</title>
+
+<!-- 🔥 DBD 類風格字體： Bebas Neue -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
     body {
-        font-family: Arial, sans-serif;
         margin: 0;
         height: 100vh;
+        font-family: 'Bebas Neue', Arial, sans-serif;
+        letter-spacing: 1px;
 
-        /* ⭐ 加入背景圖片 */
+        /* ⭐ Dead by Daylight 背景圖 */
         background-image: url('https://assets.deadbydaylight.com/dbd_animated_keyart_poster_b318564e39.jpg');
-        background-size: cover;       /* 充滿整個畫面 */
-        background-position: center;  /* 置中 */
-        background-repeat: no-repeat; /* 不重複 */
-        background-attachment: fixed; /* 滾動時固定 */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
 
-        /* ⭐ 保留原本置中排版 */
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
+    /* ⭐ 黑邊白字發光文字（DBD 風格） */
+    h2, label {
+        color: #ffffff;
+        text-shadow: 
+            2px 2px 4px black,
+            0 0 10px rgba(255,255,255,0.3);
+        font-size: 28px;
+    }
+
+    label {
+        font-size: 20px;
+        margin-top: 15px;
+    }
+
     .container {
-        background: rgba(255,255,255,0.85); /* ⭐ 微透明白背景讓字更清楚 */
+        background: rgba(0,0,0,0.6);
         padding: 30px 40px;
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-        text-align: center;
         width: 360px;
-        backdrop-filter: blur(5px); /* ⭐ 讓背景更有霧化效果 */
+        backdrop-filter: blur(6px);
+
+        border: 2px solid rgba(255,0,0,0.4); /* 🔥 紅色外框 */
+        box-shadow: 0 0 25px rgba(255,0,0,0.5);
+        text-align: center;
     }
 
     input, select {
         width: 80%;
-        padding: 6px;
+        padding: 8px;
         margin-top: 6px;
+
+        background: rgba(20,20,20,0.8);
+        border: 2px solid #444;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 18px;
+
+        text-shadow: 2px 2px 3px black;
     }
 
-    label {
-        font-weight: bold;
-        margin-top: 20px;
-        display: block;
-        color: #222;
+    /* 🔥 DBD 血紅按鈕 */
+    button {
+        width: 85%;
+        padding: 10px;
+        margin-top: 12px;
+
+        font-size: 22px;
+        font-family: "Bebas Neue";
+
+        background: linear-gradient(to bottom, #bb0000, #660000);
+        border: 2px solid #ff4444;
+        border-radius: 6px;
+        color: white;
+
+        text-shadow: 2px 2px 4px black;
+        cursor: pointer;
+
+        box-shadow: 0 0 12px rgba(255,0,0,0.6);
+        transition: 0.2s;
     }
 
+    button:hover {
+        background: linear-gradient(to bottom, #ff2222, #770000);
+        box-shadow: 0 0 18px rgba(255,80,80,0.9);
+        transform: scale(1.03);
+    }
+
+    /* List box 區塊 */
     .list-box {
-        background: rgba(255,255,255,0.7);
+        background: rgba(0,0,0,0.55);
         margin-top: 10px;
         padding: 10px;
         border-radius: 8px;
-        border: 1px solid #ddd;
-        text-align: left;
+        border: 1px solid rgba(255,0,0,0.3);
     }
 
     .list-box ul {
         margin: 0;
         padding-left: 20px;
+    }
+
+    .list-box li {
+        color: #fff;
+        font-size: 18px;
+        text-shadow: 2px 2px 4px black;
     }
 </style>
 </head>
@@ -68,32 +121,29 @@
     <h2>三才殺機</h2>
 
     <!-- 🟡 三個字輸入 -->
-    <label>輸入三才（例如：金火水）：</label>
+    <label>輸入你的三才（例如：金火水）：</label>
     <input type="text" id="sancaiInput" maxlength="3" placeholder="例如：金火木">
     <button onclick="updateOptions()">更新</button>
 
-    <!-- 🔻 可用殺手：合併後顯示 -->
+    <!-- 🔻 可用殺手 -->
     <label>可用殺手：</label>
     <select id="killerSelect"></select>
 
-    <!-- 🔻 可用配件範圍 -->
+    <!-- 🔻 可用配件 -->
     <label>可用配件範圍：</label>
     <div class="list-box"><ul id="addonList"></ul></div>
 
-    <!-- 🔻 必燒祭品種類(選1) -->
+    <!-- 🔻 必燒祭品 -->
     <label>必燒祭品種類(選1)：</label>
     <div class="list-box"><ul id="offeringList"></ul></div>
 
-    <!-- 🔻 可用技能範圍 -->
+    <!-- 🔻 技能 -->
     <label>可用技能範圍：</label>
     <div class="list-box"><ul id="perkList"></ul></div>
 
 </div>
 
 <script>
-// ----------------------------------------
-// 📌 單一三才資料
-// ----------------------------------------
 const sancaiData = {
     "金": {
         killer: ["夾子", "醫生", "小豬", "槍手", "歐爸", "釘子頭", "阿追", "奇點"],
@@ -125,29 +175,22 @@ const sancaiData = {
         offering: ["地圖或藍圖"],
         perk: ["跟移動速度有關"]
     }
-
 };
 
-
-// ----------------------------------------
-// 📌 主功能：輸入三才 → 去重複 → 合併 → 顯示
 // ----------------------------------------
 function updateOptions() {
     const input = document.getElementById("sancaiInput").value.trim();
 
-    // 格式檢查：三個字
     if (input.length !== 3) {
-        alert("請輸入三個字的三才，例如：金火水");
+        alert("請輸入三個字，例如：金火水");
         return;
     }
 
-    // 🔥 先去掉輸入三才的重複，例如 金火金 → 只剩 金火
     const chars = [...new Set(input.split(""))];
 
-    // 確認每一字都有資料
     for (let c of chars) {
         if (!sancaiData[c]) {
-            alert(`找不到三才類型：「${c}」，請確認資料是否存在。`);
+            alert(`找不到三才類型：「${c}」`);
             return;
         }
     }
@@ -157,7 +200,6 @@ function updateOptions() {
     let offerings = [];
     let perks = [];
 
-    // 合併資料
     chars.forEach(c => {
         const d = sancaiData[c];
         killers = killers.concat(d.killer);
@@ -166,22 +208,17 @@ function updateOptions() {
         perks = perks.concat(d.perk);
     });
 
-    // 🔥 最後結果再去重複
     killers = [...new Set(killers)];
     addons = [...new Set(addons)];
     offerings = [...new Set(offerings)];
     perks = [...new Set(perks)];
 
-    // 顯示結果
     fillSelect("killerSelect", killers);
     fillList("addonList", addons);
     fillList("offeringList", offerings);
     fillList("perkList", perks);
 }
 
-
-// ----------------------------------------
-// 📌 下拉選單填入
 // ----------------------------------------
 function fillSelect(id, items) {
     const sel = document.getElementById(id);
@@ -193,8 +230,6 @@ function fillSelect(id, items) {
     });
 }
 
-// ----------------------------------------
-// 📌 List 填入
 // ----------------------------------------
 function fillList(id, items) {
     const ul = document.getElementById(id);
