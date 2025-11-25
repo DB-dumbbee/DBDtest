@@ -35,9 +35,15 @@
         font-size: 28px;
     }
 
+    /* 🔥 這裡只加 nowrap 不讓標題被拆行 */
+    h2 {
+        white-space: nowrap;
+    }
+
     label {
         font-size: 20px;
         margin-top: 15px;
+        white-space: nowrap; /* ←⛔ 只加這個，不動其他 */
     }
 
     .container {
@@ -244,4 +250,3 @@ function fillList(id, items) {
 
 </body>
 </html>
-
