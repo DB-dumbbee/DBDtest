@@ -1,3 +1,4 @@
+幫我增加滑鼠移動產生血光效果
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -116,28 +117,6 @@
         font-size: 18px;
         text-shadow: 2px 2px 4px black;
     }
-
-    /* 🔥 滑鼠血光效果 */
-    .blood {
-        position: absolute;
-        width: 35px;
-        height: 35px;
-        background: radial-gradient(
-            rgba(255,0,0,0.9),
-            rgba(120,0,0,0.6),
-            rgba(80,0,0,0)
-        );
-        border-radius: 50%;
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        animation: fadeout 1s forwards;
-    }
-
-    @keyframes fadeout {
-        0% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
-        100% { opacity: 0; transform: scale(2.2) translate(-50%, -50%); }
-    }
-
 </style>
 </head>
 <body>
@@ -234,23 +213,7 @@ function fillList(id, items) {
         ul.appendChild(li);
     });
 }
-
-// 🩸 滑鼠移動血光效果
-document.addEventListener("mousemove", function(e) {
-    const blood = document.createElement("div");
-    blood.classList.add("blood");
-
-    blood.style.left = e.pageX + "px";
-    blood.style.top = e.pageY + "px";
-
-    document.body.appendChild(blood);
-
-    setTimeout(() => {
-        blood.remove();
-    }, 1000);
-});
 </script>
 
 </body>
 </html>
-
