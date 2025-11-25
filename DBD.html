@@ -14,7 +14,6 @@
         font-family: 'Bebas Neue', Arial, sans-serif;
         letter-spacing: 1px;
 
-        /* ⭐ Dead by Daylight 背景圖 */
         background-image: url('ALL.png');
         background-size: cover;
         background-position: center;
@@ -26,7 +25,6 @@
         align-items: center;
     }
 
-    /* ⭐ 黑邊白字發光文字（DBD 風格） */
     h2, label {
         color: #ffffff;
         text-shadow: 
@@ -35,7 +33,9 @@
         font-size: 28px;
     }
 
-    h2 { white-space: nowrap; }
+    h2 {
+        white-space: nowrap;
+    }
 
     label {
         font-size: 20px;
@@ -73,6 +73,7 @@
         width: 85%;
         padding: 10px;
         margin-top: 12px;
+
         font-size: 22px;
         font-family: "Bebas Neue";
 
@@ -116,23 +117,13 @@
 </head>
 <body>
 
-<!-- 🔊 自動播放 + 循環 + 降低音量 + 前面時間開始 -->
-<audio id="bgm" src="music.mp3" autoplay loop></audio>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const audio = document.getElementById("bgm");
-
-    audio.volume = 0.25;        // ⭐ 調整音量（0.0～1.0）
-    audio.currentTime = 5;      // ⭐ 從第 5 秒開始播放（可改）
-});
-</script>
+<!-- 🔊 自動播放（音量 0） -->
+<audio id="bgm" src="music.mp3" loop></audio>
 
 <div class="container">
 
     <h2>惡靈五行挑戰殺機</h2>
 
-    <!-- 🟡 三個字輸入 -->
     <label>輸入你的五行三才：</label>
     <input type="text" id="sancaiInput" maxlength="3" placeholder="例如：金火木">
     <button onclick="updateOptions()">向惡靈發出挑戰</button>
@@ -152,6 +143,31 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
 <script>
+// ⭐ 自動播放 + 淡入音量
+window.addEventListener('DOMContentLoaded', () => {
+    const bgm = document.getElementById("bgm");
+
+    bgm.volume = 0; // 無聲開始
+
+    bgm.play().then(() => {
+        let v = 0;
+        const fade = setInterval(() => {
+            v += 0.02;
+            bgm.volume = v;
+            if (v >= 0.30) { // ⭐ 最終音量（可調）
+                clearInterval(fade);
+            }
+        }, 80);
+    }).catch(() => {
+        // 若自動播放被阻擋 → 點一下啟動
+        document.addEventListener("click", () => {
+            bgm.volume = 0.3;
+            bgm.play();
+        }, { once: true });
+    });
+});
+
+
 const sancaiData = {
     "金": { killer: ["夾子", "醫生", "小豬", "槍手", "歐爸", "釘子頭", "阿追", "奇點"], addon: ["紫色等級"], offering: ["金幣"], perk: ["跟發電機或普通攻擊有關"] },
     "火": { killer: ["麥麥", "皮臉", "老佛", "怨靈", "歐逆", "騎士", "巫妖", "德古拉", "金木"], addon: ["紅色等級"], offering: ["斬殺"], perk: ["跟圖騰有關"] },
