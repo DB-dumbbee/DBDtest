@@ -14,18 +14,30 @@
         font-family: 'Bebas Neue', Arial, sans-serif;
         letter-spacing: 1px;
 
+        /* 🔼 往上移動的位置 */
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 8vh; /* 可自行調整 8~12 之間 */
+    }
+
+    /* 🚀 改善背景滾動吞吐與性能延遲 */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         background-image: url('ALL.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        z-index: -1;
+        transform: translateZ(0); /* GPU 加速避免延遲 */
     }
 
-    h2, label {
+    h2, label, a {
         color: #ffffff;
         text-shadow: 
             2px 2px 4px black,
@@ -33,14 +45,20 @@
         font-size: 28px;
     }
 
-    h2 {
-        white-space: nowrap;
-    }
-
     label {
         font-size: 20px;
         margin-top: 15px;
         white-space: nowrap;
+    }
+
+    /* 🔗 超連結文字 */
+    a {
+        font-size: 18px;
+        color: #ff6666;
+        text-shadow: 2px 2px 4px black;
+        display: block;        /* 讓它獨立一行顯示 */
+        margin-top: 4px;
+        margin-bottom: 6px;    /* 與輸入框分開 */
     }
 
     .container {
@@ -59,13 +77,11 @@
         width: 80%;
         padding: 8px;
         margin-top: 6px;
-
         background: rgba(20,20,20,0.8);
         border: 2px solid #444;
         border-radius: 6px;
         color: #fff;
         font-size: 18px;
-
         text-shadow: 2px 2px 3px black;
     }
 
@@ -73,18 +89,14 @@
         width: 85%;
         padding: 10px;
         margin-top: 12px;
-
         font-size: 22px;
         font-family: "Bebas Neue";
-
         background: linear-gradient(to bottom, #bb0000, #660000);
         border: 2px solid #ff4444;
         border-radius: 6px;
         color: white;
-
         text-shadow: 2px 2px 4px black;
         cursor: pointer;
-
         box-shadow: 0 0 12px rgba(255,0,0,0.6);
         transition: 0.2s;
     }
@@ -125,15 +137,9 @@
     <h2>惡靈五行挑戰殺機</h2>
 
     <label>輸入你的五行三才：</label>
-    
-    <a href="https://naming123.doitwell.tw/" target="_blank" style="
-    color: #ff6666;
-    font-size: 18px;
-    text-shadow: 2px 2px 4px black;
-    display: block;
-    margin-top: 4px;
-">【我的三才是?】</a>
-    
+    <!-- 🔗 加上超連結 -->
+    <a href="https://naming123.doitwell.tw/" target="_blank">【我的三才是?】</a>
+
     <input type="text" id="sancaiInput" maxlength="3" placeholder="例如：金火木">
     <button onclick="updateOptions()">向惡靈發出挑戰</button>
 
@@ -155,27 +161,22 @@
 // ⭐ 自動播放 + 淡入音量
 window.addEventListener('DOMContentLoaded', () => {
     const bgm = document.getElementById("bgm");
-
-    bgm.volume = 0; // 無聲開始
+    bgm.volume = 0;
 
     bgm.play().then(() => {
         let v = 0;
         const fade = setInterval(() => {
             v += 0.02;
             bgm.volume = v;
-            if (v >= 0.15) { // ⭐ 最終音量（可調）
-                clearInterval(fade);
-            }
+            if (v >= 0.15) { clearInterval(fade); }
         }, 80);
     }).catch(() => {
-        // 若自動播放被阻擋 → 點一下啟動
         document.addEventListener("click", () => {
             bgm.volume = 0.3;
             bgm.play();
         }, { once: true });
     });
 });
-
 
 const sancaiData = {
     "金": { killer: ["夾子", "醫生", "小豬", "槍手", "歐爸", "釘子頭", "阿追", "奇點"], addon: ["紫色等級"], offering: ["金幣"], perk: ["跟發電機或普通攻擊有關"] },
@@ -246,7 +247,3 @@ function fillList(id, items) {
 
 </body>
 </html>
-
-
-
-
