@@ -137,7 +137,7 @@
     <label>【祭品種類(選1)】：</label>
     <div class="list-box"><ul id="offeringList"></ul></div>
 
-    <label>【可用技能範圍】：</label>
+    <label>【可用技能範圍】<br>【每一才都要有但可重複】：</label>
     <div class="list-box"><ul id="perkList"></ul></div>
 
 </div>
@@ -170,10 +170,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const sancaiData = {
     "金": { killer: ["夾子", "醫生", "小豬", "槍手", "歐爸", "釘子頭", "阿追", "奇點"], addon: ["紫色等級"], offering: ["金幣"], perk: ["跟發電機或普通攻擊有關"] },
-    "火": { killer: ["麥麥", "皮臉", "老佛", "怨靈", "歐逆", "騎士", "巫妖", "德古拉", "金木"], addon: ["紅色等級"], offering: ["斬殺"], perk: ["跟圖騰有關"] },
-    "水": { killer: ["小丑", "瘟疫", "枯魔", "鳥姐", "貞子", "異形", "偽德", "黑大媽", "卡蘇"], addon: ["藍色等級"], offering: ["黑霧"], perk: ["跟冷卻有關"] },
-    "木": { killer: ["噹噹", "護士", "兔媽", "鬼臉", "影魔", "骨姐", "恰吉", "彈簧"], addon: ["綠色等級"], offering: ["枯木"], perk: ["跟木板有關"] },
-    "土": { killer: ["比利", "妖婆", "軍團", "魔王", "三角頭", "雙胞胎", "威哥"], addon: ["灰色等級"], offering: ["地圖或藍圖"], perk: ["跟移動速度有關"] }
+    "火": { killer: ["麥麥", "皮臉", "老佛", "怨靈", "歐逆", "騎士", "巫妖", "德古拉", "金木"], addon: ["紅色等級"], offering: ["斬殺"], perk: ["跟圖騰或氣場有關"] },
+    "水": { killer: ["小丑", "瘟疫", "枯魔", "鳥姐", "貞子", "異形", "偽德", "黑大媽", "卡蘇"], addon: ["藍色等級"], offering: ["黑霧"], perk: ["跟冷卻或窗戶有關"] },
+    "木": { killer: ["噹噹", "護士", "兔媽", "鬼臉", "影魔", "骨姐", "恰吉", "彈簧"], addon: ["綠色等級"], offering: ["枯木"], perk: ["跟木板或獵物有關"] },
+    "土": { killer: ["比利", "妖婆", "軍團", "魔王", "三角頭", "雙胞胎", "威哥"], addon: ["灰色等級"], offering: ["地圖或藍圖"], perk: ["跟移動速度或鉤子有關"] }
 };
 
 function updateOptions() {
@@ -237,4 +237,5 @@ function fillList(id, items) {
 
 </body>
 </html>
+
 
